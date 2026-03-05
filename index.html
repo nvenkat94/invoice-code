@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Enterprises Tax Invoice</title>
+    <style>
+        .page-section {
+            display: none;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .page-section {
+                display: none !important;
+            }
+
+            .page-section.active {
+                display: block !important;
+            }
+            textarea {
+                border: none;
+            }
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            color: #000;
+        }
+
+        .invoice-container {
+            max-width: 900px;
+            margin: auto;
+            border: 1px solid #000;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            text-align: center;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        .company-details {
+            font-size: 14px;
+        }
+
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        textarea {
+            /* display: flex; */
+            justify-content: flex-start;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        td textarea {
+            /* padding: 8px; */
+            text-align: left;
+            /* font-size: 14px; */
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .totals {
+            margin-top: 20px;
+            width: 50%;
+            float: right;
+        }
+
+        .totals td {
+            border: none;
+            text-align: right;
+            padding: 5px;
+        }
+
+        .footer {
+            padding-top: 25px;
+            clear: both;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <select class="no-print" onchange="showPage(this.value)">
+        <option value="">Select Document</option>
+        <option value="invoice">Tax Invoice</option>
+        <option value="receipt">Receipt</option>
+        <option value="quotation">Quotation</option>
+    </select>
+
+    <!-- TAX INVOICE -->
+    <div id="invoice" class="page-section">
+        <!-- Your existing Tax Invoice HTML here -->
+        <div class="invoice-container">
+
+            <div class="header">
+                <h2>Modern Enterprises</h2>
+                <p>GST NO: 33EAWPS0368PIZO</p>
+                <div class="company-details">
+                    2/147B, Main Road, Sirangudi<br>
+                    Thanjavur Dt, Pincode - 614903<br>
+                    Phone: 97152 77368<br>
+                    Email: modernenterprises0777@gmail.com
+                </div>
+            </div>
+            <h3>Tax Invoice</h3>
+            <div class="flex-row">
+                <div>
+                    <strong>Quotation For:</strong><br>
+                    <input placeholder="Customer Name"><br>
+                    <input placeholder="Address 1"><br>
+                    <input placeholder="Address 2">
+                </div>
+                <div>
+                    <strong>Date:</strong> <input type="text">
+                </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S. No</th>
+                            <th class="text-left">Description</th>
+                            <th>Unit Price</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+
+                            <td class="text-left">
+
+                                <textarea rows="4" style="width:100%;">
+TRIDENT FARMERS ROTARY TILLER ABOVE 50 HP ROTAVATOR F150.25 LD 5 FEET 36 BLADES (CHAIN DRIVE).PTOSHAFT (LD 5 FEET)
+                    </textarea>
+
+                                Serial No: <span><input type="text" value="1234" style="width:100%;"></span><br>
+                                Batch No: <input type="text" value="12345" style="width:100%;"><br>
+                                Model: <input type="text" value="Chain Drive" style="width:100%;"><br>
+                                RPM: <input type="text" value="540" style="width:100%;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="price" oninput="calculate()" style="width:80px;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="qty" oninput="calculate()" style="width:60px;"> Nos
+                            </td>
+
+                            <td>
+                                ₹<div class="amount">0</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="hyp" style="display: flex;justify-content: space-between;">
+                    <!-- <div> -->
+
+                        <textarea rows="1" style="width: 450px;padding-right: 25px;" > Hyp: Shriram Finance Limited</textarea>
+                    <!-- </div> -->
+                <table class="totals">
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td><span id="subtotal">0</span><br></td>
+                    </tr>
+                    <tr>
+                        <td>SGST 2.5%:</td>
+                        <td>₹<span id="sgst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>IGST 2.5%:</td>
+                        <td>₹<span id="igst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td><strong>₹<span id="total">0</span></strong></td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div>
+                    <p><strong>Payment Instructions</strong></p>
+                    Account Name: MODERN ENTERPRISES<br>
+                    Account No: 7464919833<br>
+                    IFSC Code: IDIB000M005<br>
+                    Bank Name: Indian Bank<br>
+                    Branch: Madukkur<br><br>
+                </div>
+                <div>
+
+                    For, MODERN ENTERPRISES<br><br><br><br>
+                    ___________________________<br>
+                    Authorized Signature<br><br>
+                </div>
+
+            </div>
+            <strong style="text-align: center;display: flex;justify-content: center;">THANK YOU FOR YOUR
+                BUSINESS!</strong>
+
+        </div>
+    </div>
+
+    <!-- RECEIPT -->
+    <div id="receipt" class="page-section" style="display:none;">
+        <!-- Receipt HTML here -->
+        <div class="invoice-container">
+
+            <div class="header">
+                <h2>Modern Enterprises</h2>
+                <p>GST NO: 33EAWPS0368PIZO</p>
+                <div class="company-details">
+                    2/147B, Main Road, Sirangudi<br>
+                    Thanjavur Dt, Pincode - 614903<br>
+                    Phone: 97152 77368<br>
+                    Email: modernenterprises0777@gmail.com
+                </div>
+            </div>
+            <h3>Receipt</h3>
+            <div class="flex-row">
+                <div>
+                    <strong>Quotation For:</strong><br>
+                    <input placeholder="Customer Name"><br>
+                    <input placeholder="Address 1"><br>
+                    <input placeholder="Address 2">
+                </div>
+                <div>
+                    <strong>Date:</strong> <input type="text">
+                </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S. No</th>
+                            <th class="text-left">Description</th>
+                            <th>Unit Price</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+
+                            <td class="text-left">
+
+                                <textarea rows="4" style="width:100%;">
+TRIDENT FARMERS ROTARY TILLER ABOVE 50 HP ROTAVATOR F150.25 LD 5 FEET 36 BLADES (CHAIN DRIVE).PTOSHAFT (LD 5 FEET)
+                    </textarea>
+
+                                Serial No: <span><input type="text" value="1234" style="width:100%;"></span><br>
+                                Batch No: <input type="text" value="12345" style="width:100%;"><br>
+                                Model: <input type="text" value="Chain Drive" style="width:100%;"><br>
+                                RPM: <input type="text" value="540" style="width:100%;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="price" oninput="calculate()" style="width:80px;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="qty" oninput="calculate()" style="width:60px;"> Nos
+                            </td>
+
+                            <td>
+                                ₹<div class="amount">0</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="totals">
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td><span id="subtotal">0</span><br></td>
+                    </tr>
+                    <tr>
+                        <td>SGST 2.5%:</td>
+                        <td>₹<span id="sgst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>IGST 2.5%:</td>
+                        <td>₹<span id="igst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td><strong>₹<span id="total">0</span></strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="hyp">HYP: Shriram Finance Limited</div>
+
+            <div class="footer">
+                <div>
+                    <p><strong>Payment Instructions</strong></p>
+                    Account Name: MODERN ENTERPRISES<br>
+                    Account No: 7464919833<br>
+                    IFSC Code: IDIB000M005<br>
+                    Bank Name: Indian Bank<br>
+                    Branch: Madukkur<br><br>
+                </div>
+                <div>
+
+                    For, MODERN ENTERPRISES<br><br><br><br>
+                    ___________________________<br>
+                    Authorized Signature<br><br>
+                </div>
+
+            </div>
+            <strong style="text-align: center;display: flex;justify-content: center;">THANK YOU FOR YOUR
+                BUSINESS!</strong>
+
+        </div>
+    </div>
+
+    <!-- QUOTATION -->
+    <div id="quotation" class="page-section" style="display:none;">
+        <!-- Quotation HTML here -->
+        <div class="invoice-container">
+
+            <div class="header">
+                <h2>Modern Enterprises</h2>
+                <p>GST NO: 33EAWPS0368PIZO</p>
+                <div class="company-details">
+                    2/147B, Main Road, Sirangudi<br>
+                    Thanjavur Dt, Pincode - 614903<br>
+                    Phone: 97152 77368<br>
+                    Email: modernenterprises0777@gmail.com
+                </div>
+            </div>
+            <h3>Quotation</h3>
+            <div class="flex-row">
+                <div>
+                    <strong>Quotation For:</strong><br>
+                    <input placeholder="Customer Name"><br>
+                    <input placeholder="Address 1"><br>
+                    <input placeholder="Address 2">
+                </div>
+                <div>
+                    <strong>Date:</strong> <input type="text">
+                </div>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S. No</th>
+                            <th class="text-left">Description</th>
+                            <th>Unit Price</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+
+                            <td class="text-left">
+
+                                <textarea rows="4" style="width:100%;">
+    TRIDENT FARMERS ROTARY TILLER ABOVE 50 HP ROTAVATOR F150.25 LD 5 FEET 36 BLADES (CHAIN DRIVE).PTOSHAFT (LD 5 FEET)
+                    </textarea>
+
+                                Serial No: <span><input type="text" value="1234" style="width:100%;"></span><br>
+                                Batch No: <input type="text" value="12345" style="width:100%;"><br>
+                                Model: <input type="text" value="Chain Drive" style="width:100%;"><br>
+                                RPM: <input type="text" value="540" style="width:100%;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="price" oninput="calculate()" style="width:80px;">
+                            </td>
+
+                            <td>
+                                <input type="number" class="qty" oninput="calculate()" style="width:60px;"> Nos
+                            </td>
+
+                            <td>
+                                ₹<div class="amount">0</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <table class="totals">
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td><span id="subtotal">0</span><br></td>
+                    </tr>
+                    <tr>
+                        <td>SGST 2.5%:</td>
+                        <td>₹<span id="sgst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td>IGST 2.5%:</td>
+                        <td>₹<span id="igst">0</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total:</strong></td>
+                        <td><strong>₹<span id="total">0</span></strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="hyp">
+                <textarea rows="1"> Hyp: Shriram Finance Limited</textarea>
+            </div>
+
+            <div class="footer">
+                <div>
+                    <p><strong>Payment Instructions</strong></p>
+                    Account Name: MODERN ENTERPRISES<br>
+                    Account No: 7464919833<br>
+                    IFSC Code: IDIB000M005<br>
+                    Bank Name: Indian Bank<br>
+                    Branch: Madukkur<br><br>
+                </div>
+                <div>
+
+                    For, MODERN ENTERPRISES<br><br><br><br>
+                    ___________________________<br>
+                    Authorized Signature<br><br>
+                </div>
+
+            </div>
+            <strong style="text-align: center;display: flex;justify-content: center;">THANK YOU FOR YOUR
+                BUSINESS!</strong>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <button class="no-print" onclick="window.print()">Generate PDF</button>
+    <br>
+    <br>
+
+
+    <script>
+
+        function calculate() {
+            let subtotal = 0;
+
+            const prices = document.querySelectorAll(".price");
+            const qtys = document.querySelectorAll(".qty");
+            const amounts = document.querySelectorAll(".amount");
+
+            for (let i = 0; i < prices.length; i++) {
+                let price = parseFloat(prices[i].value) || 0;
+                let qty = parseFloat(qtys[i].value) || 0;
+                let total = price * qty;
+
+                amounts[i].innerText = total.toFixed(2);
+                subtotal += total;
+            }
+
+            let sgst = subtotal * 0.025;
+            let igst = subtotal * 0.025;
+            let total = subtotal + sgst + igst;
+
+            document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+            document.getElementById("sgst").innerText = sgst.toFixed(2);
+            document.getElementById("igst").innerText = igst.toFixed(2);
+            document.getElementById("total").innerText = total.toFixed(2);
+        }
+
+        function showPage(pageId) {
+            const sections = document.querySelectorAll(".page-section");
+
+            sections.forEach(section => {
+                section.classList.remove("active");
+                section.style.display = "none";
+            });
+
+            const selected = document.getElementById(pageId);
+            selected.style.display = "block";
+            selected.classList.add("active");
+        }
+
+    </script>
+</body>
+
+</html>
